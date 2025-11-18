@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delícias Caseira - Bolos e Doces Artesanais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFE5EC 100%);
+            color: #5A3A3A;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #FFB6C1 0%, #FF8FAB 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(255, 143, 171, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-text h1 {
+            color: white;
+            font-size: 24px;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 143, 171, 0.3) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23FFE5EC" width="1200" height="400"/></svg>');
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '❄️';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            color: #FF8FAB;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #8A5A5A;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            color: #5A3A3A;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s;
+            letter-spacing: 2px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Categories Section */
+        .categories {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            color: #FF8FAB;
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '✨';
+            display: block;
+            margin-top: 15px;
+            font-size: 30px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(255, 143, 171, 0.15);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 143, 171, 0.25);
+        }
+
+        .category-image {
+            height: 250px;
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFD1DC 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        .category-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .category-content h3 {
+            font-size: 28px;
+            color: #FF8FAB;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .category-content p {
+            font-size: 16px;
+            color: #8A5A5A;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+            color: #5A3A3A;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Natal Special Section */
+        .natal-special {
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            padding: 80px 20px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .natal-special::before,
+        .natal-special::after {
+            content: '🎄';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+        }
+
+        .natal-special::before {
+            left: -50px;
+            top: -30px;
+            animation: rotate 20s linear infinite;
+        }
+
+        .natal-special::after {
+            right: -50px;
+            bottom: -30px;
+            animation: rotate 20s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .natal-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .natal-content h2 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        .natal-content p {
+            font-size: 22px;
+            color: #FFE5EC;
+            margin-bottom: 40px;
+        }
+
+        .natal-products {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .natal-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            width: 250px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .natal-item:hover {
+            transform: scale(1.05);
+        }
+
+        .natal-item-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .natal-item h4 {
+            color: #8B0000;
+            font-size: 22px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .natal-item p {
+            color: #5A3A3A;
+            font-size: 14px;
+        }
+
+        /* Contact Section */
+        .contact {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(255, 143, 171, 0.2);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 38px;
+            color: #FF8FAB;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+            color: #5A3A3A;
+        }
+
+        .contact-item span {
+            font-size: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #FF8FAB 0%, #FFB6C1 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .natal-content h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-circle">🎂</div>
+                <div class="logo-text">
+                    <h1>DELÍCIAS CASEIRA</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#natal">Natal</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h2>Sabores que Encantam</h2>
+        <p>Bolos artesanais feitos com amor e dedicação para tornar seus momentos especiais inesquecíveis</p>
+        <button class="cta-button" onclick="document.getElementById('contato').scrollIntoView({behavior: 'smooth'})">
+            Faça seu Pedido
+        </button>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="produtos" class="categories">
+        <h2 class="section-title">Nossos Produtos</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-image">🎂</div>
+                <div class="category-content">
+                    <h3>Bolos de Aniversário</h3>
+                    <p>Bolos personalizados e deliciosos para tornar sua festa inesquecível. Diversos sabores e decorações exclusivas.</p>
+                    <span class="category-badge">Mais Vendido</span>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🍮</div>
+                <div class="category-content">
+                    <h3>Doces em Taças</h3>
+                    <p>Sobremesas sofisticadas servidas em taças elegantes. Perfeitas para eventos e presentear quem você ama.</p>
+                    <span class="category-badge">Premium</span>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🧁</div>
+                <div class="category-content">
+                    <h3>Cupcakes & Docinhos</h3>
+                    <p>Mini delícias para festas e eventos. Variedade de sabores e decorações temáticas para todas as ocasiões.</p>
+                    <span class="category-badge">Novidade</span>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🍰</div>
+                <div class="category-content">
+                    <h3>Tortas & Cheesecakes</h3>
+                    <p>Sobremesas clássicas com receitas exclusivas. Massa crocante e recheios cremosos irresistíveis.</p>
+                    <span class="category-badge">Artesanal</span>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🍪</div>
+                <div class="category-content">
+                    <h3>Cookies & Brownies</h3>
+                    <p>Quitutes perfeitos para café da tarde. Crocantes por fora, macios por dentro, feitos com ingredientes selecionados.</p>
+                    <span class="category-badge">Gourmet</span>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-image">🥧</div>
+                <div class="category-content">
+                    <h3>Doces Especiais</h3>
+                    <p>Criações exclusivas e receitas de família. Sabores tradicionais e contemporâneos para todos os gostos.</p>
+                    <span class="category-badge">Exclusivo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Natal Special Section -->
+    <section id="natal" class="natal-special">
+        <div class="natal-content">
+            <h2>🎄 Especial de Natal 🎄</h2>
+            <p>Celebre as festas com nossas delícias especiais de fim de ano</p>
+            
+            <div class="natal-products">
+                <div class="natal-item">
+                    <div class="natal-item-icon">🎅</div>
+                    <h4>Panetone Artesanal</h4>
+                    <p>Receita tradicional italiana com frutas cristalizadas e gotas de chocolate belga</p>
+                </div>
+
+                <div class="natal-item">
+                    <div class="natal-item-icon">⭐</div>
+                    <h4>Rabanada Gourmet</h4>
+                    <p>Rabanadas especiais com calda de vinho do Porto e canela premium</p>
+                </div>
+
+                <div class="natal-item">
+                    <div class="natal-item-icon">🎁</div>
+                    <h4>Cesta de Natal</h4>
+                    <p>Caixas presenteáveis com seleção de nossos melhores doces e bolos</p>
+                </div>
+
+                <div class="natal-item">
+                    <div class="natal-item-icon">❄️</div>
+                    <h4>Bolo de Natal</h4>
+                    <p>Bolos temáticos decorados para a ceia de Natal com sua família</p>
+                </div>
+            </div>
+
+            <button class="cta-button" style="margin-top: 40px;" onclick="document.getElementById('contato').scrollIntoView({behavior: 'smooth'})">
+                Encomendar Agora
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <h2>Entre em Contato</h2>
+        <p style="color: #8A5A5A; font-size: 18px; margin-bottom: 30px;">
+            Estamos prontos para fazer seu pedido especial!
+        </p>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>📱</span>
+                <div>
+                    <strong>WhatsApp</strong><br>
+                    (71) 99999-9999
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <span>📧</span>
+                <div>
+                    <strong>E-mail</strong><br>
+                    contato@deliciascaseira.com.br
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <span>📍</span>
+                <div>
+                    <strong>Salvador, BA</strong><br>
+                    Entregamos em toda cidade
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Delícias Caseira - Todos os direitos reservados</p>
+        <p style="margin-top: 10px; font-size: 14px;">Feito com 💕 e muito açúcar</p>
+    </footer>
+</body>
+</html>
