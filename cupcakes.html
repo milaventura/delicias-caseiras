@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tortas & Cheesecakes - Delícias Caseira</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #FFF5F7 0%, #FFE5EC 100%); color: #5A3A3A; }
+        header { background: linear-gradient(135deg, #FFB6C1 0%, #FF8FAB 100%); padding: 20px 0; box-shadow: 0 4px 20px rgba(255, 143, 171, 0.3); position: sticky; top: 0; z-index: 1000; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-circle { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo-text h1 { color: white; font-size: 20px; letter-spacing: 2px; font-weight: 300; }
+        .back-button { background: rgba(255, 255, 255, 0.2); color: white; padding: 10px 25px; border: 2px solid white; border-radius: 25px; text-decoration: none; font-size: 16px; transition: all 0.3s; letter-spacing: 1px; }
+        .back-button:hover { background: white; color: #FF8FAB; }
+        .page-hero { background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 143, 171, 0.3) 100%); padding: 80px 20px 60px; text-align: center; }
+        .page-hero h2 { font-size: 48px; color: #FF8FAB; margin-bottom: 20px; letter-spacing: 4px; font-weight: 300; }
+        .page-hero p { font-size: 20px; color: #8A5A5A; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .products-gallery { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(255, 143, 171, 0.15); transition: all 0.4s; cursor: pointer; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(255, 143, 171, 0.25); }
+        .product-image { width: 100%; height: 300px; background: linear-gradient(135deg, #FFE5EC 0%, #FFD1DC 100%); display: flex; align-items: center; justify-content: center; font-size: 100px; position: relative; overflow: hidden; }
+        .product-image::before { content: ''; position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%); animation: pulse 3s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        .product-info { padding: 25px; }
+        .product-info h3 { font-size: 24px; color: #FF8FAB; margin-bottom: 10px; letter-spacing: 1px; }
+        .product-info p { font-size: 15px; color: #8A5A5A; line-height: 1.6; margin-bottom: 15px; }
+        .product-price { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .price { font-size: 26px; color: #FF8FAB; font-weight: bold; }
+        .order-btn { background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%); color: #5A3A3A; padding: 10px 20px; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; transition: all 0.3s; font-family: 'Georgia', serif; letter-spacing: 1px; }
+        .order-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 30px; max-width: 600px; width: 100%; padding: 40px; position: relative; animation: modalSlide 0.3s; }
+        @keyframes modalSlide { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; color: #FF8FAB; transition: all 0.3s; }
+        .close-modal:hover { transform: rotate(90deg); }
+        .modal-header { text-align: center; margin-bottom: 30px; }
+        .modal-header h3 { font-size: 32px; color: #FF8FAB; margin-bottom: 10px; }
+        .modal-image { font-size: 80px; text-align: center; margin: 20px 0; }
+        .modal-details p { font-size: 16px; color: #5A3A3A; line-height: 1.8; margin-bottom: 15px; }
+        .modal-price { text-align: center; font-size: 36px; color: #FF8FAB; font-weight: bold; margin: 30px 0; }
+        .whatsapp-btn { display: block; width: 100%; background: #25D366; color: white; padding: 15px; border: none; border-radius: 30px; font-size: 18px; cursor: pointer; transition: all 0.3s; font-family: 'Georgia', serif; text-align: center; text-decoration: none; }
+        .whatsapp-btn:hover { background: #20BA5A; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); }
+        footer { background: linear-gradient(135deg, #FF8FAB 0%, #FFB6C1 100%); color: white; text-align: center; padding: 40px 20px; margin-top: 80px; }
+        @media (max-width: 768px) { .page-hero h2 { font-size: 32px; } .gallery-grid { grid-template-columns: 1fr; } .header-content { flex-direction: column; gap: 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-circle">🎂</div>
+                <div class="logo-text"><h1>DELÍCIAS CASEIRA</h1></div>
+            </a>
+            <a href="index.html" class="back-button">← Voltar</a>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <h2>🍰 Tortas & Cheesecakes</h2>
+        <p>Sobremesas clássicas com receitas exclusivas. Massa crocante, recheios cremosos e sabores irresistíveis para qualquer ocasião especial.</p>
+    </section>
+
+    <section class="products-gallery">
+        <div class="gallery-grid">
+            <div class="product-card" onclick="openModal(1)">
+                <div class="product-image">🍋</div>
+                <div class="product-info">
+                    <h3>Torta de Limão</h3>
+                    <p>Massa crocante, creme de limão siciliano e merengue italiano. Equilíbrio perfeito.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 85,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal(2)">
+                <div class="product-image">🍫</div>
+                <div class="product-info">
+                    <h3>Cheesecake Tradicional</h3>
+                    <p>Clássico cheesecake nova-iorquino com base de biscoito e calda de frutas vermelhas.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 95,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal(3)">
+                <div class="product-image">🥧</div>
+                <div class="product-info">
+                    <h3>Torta de Maçã</h3>
+                    <p>Receita tradicional com maçãs caramelizadas e canela. Servida morna, irresistível.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 75,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal(4)">
+                <div class="product-image">🍓</div>
+                <div class="product-info">
+                    <h3>Torta de Morango</h3>
+                    <p>Creme pâtissière, morangos frescos e geleia brilhante. Elegância e sabor.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 90,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal(5)">
+                <div class="product-image">🍮</div>
+                <div class="product-info">
+                    <h3>Torta de Coco</h3>
+                    <p>Massa amanteigada com recheio cremoso de coco queimado. Tropical e deliciosa.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 80,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" onclick="openModal(6)">
+                <div class="product-image">🥜</div>
+                <div class="product-info">
+                    <h3>Cheesecake Doce de Leite</h3>
+                    <p>Cheesecake cremoso com calda de doce de leite argentino e nozes caramelizadas.</p>
+                    <div class="product-price">
+                        <span class="price">R$ 98,00</span>
+                        <button class="order-btn">Encomendar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div class="modal-header">
+                <div class="modal-image" id="modalIcon">🍰</div>
+                <h3 id="modalTitle">Nome do Produto</h3>
+            </div>
+            <div class="modal-details">
+                <p id="modalDescription">Descrição detalhada...</p>
+                <p><strong>Tamanho:</strong> 8 fatias generosas</p>
+                <p><strong>Validade:</strong> 5 dias refrigerado</p>
+                <p><strong>Prazo:</strong> 2 dias úteis</p>
+            </div>
+            <div class="modal-price" id="modalPrice">R$ 85,00</div>
+            <a href="https://wa.me/5571999999999?text=Olá! Gostaria de encomendar uma torta." class="whatsapp-btn" target="_blank">
+                📱 Encomendar pelo WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Delícias Caseira - Todos os direitos reservados</p>
+        <p style="margin-top: 10px; font-size: 14px;">Feito com 💕 e muito açúcar</p>
+    </footer>
+
+    <script>
+        const products = {
+            1: { icon: '🍋', title: 'Torta de Limão', description: 'Clássica torta com massa quebrada crocante, recheio cremoso de limão siciliano e cobertura de merengue italiano levemente tostado. Refrescante e equilibrada, perfeita para qualquer ocasião.', price: 'R$ 85,00' },
+            2: { icon: '🍫', title: 'Cheesecake Tradicional', description: 'Autêntico cheesecake nova-iorquino com textura cremosa e aveludada. Base crocante de biscoito com manteiga e calda de frutas vermelhas frescas. Uma experiência única.', price: 'R$ 95,00' },
+            3: { icon: '🥧', title: 'Torta de Maçã', description: 'Receita tradicional americana com maçãs verdes caramelizadas, canela em pau e crosta folhada dourada. Melhor servida morna com sorvete de creme.', price: 'R$ 75,00' },
+            4: { icon: '🍓', title: 'Torta de Morango', description: 'Elegante torta francesa com creme pâtissière suave, morangos frescos selecionados e geleia de morango brilhante. Sofisticação em cada fatia.', price: 'R$ 90,00' },
+            5: { icon: '🍮', title: 'Torta de Coco', description: 'Massa amanteigada artesanal com recheio cremoso de coco fresco queimado e toque de baunilha. Sabor tropical intenso e marcante.', price: 'R$ 80,00' },
+            6: { icon: '🥜', title: 'Cheesecake Doce de Leite', description: 'Cheesecake super cremoso com generosa calda de doce de leite argentino e finalização com nozes pecã caramelizadas. Indulgência pura.', price: 'R$ 98,00' }
+        };
+
+        function openModal(id) {
+            const p = products[id];
+            document.getElementById('modalIcon').textContent = p.icon;
+            document.getElementById('modalTitle').textContent = p.title;
+            document.getElementById('modalDescription').textContent = p.description;
+            document.getElementById('modalPrice').textContent = p.price;
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('productModal').classList.remove('active'); }
+        document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    </script>
+</body>
+</html>
